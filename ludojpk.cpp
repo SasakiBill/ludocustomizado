@@ -1,8 +1,7 @@
 #include <iostream>
 #include <cstdlib>
-#include <ctime>
 #include <windows.h>
-#define facesDado 6
+#define Dado 6
 using namespace std;
 
 /*@version 1.0.0
@@ -139,7 +138,7 @@ void zeraDado(int* dad, int* choice, int* player, int* tr) {
 */
 void dadoMisericordia(int* dadoo) {
 	if (*dadoo == 1) {
-		*dadoo += (rand() % facesDado) + 1;
+		*dadoo += (rand() % Dado) + 1;
 		cout << "Novo valor do dado: " << *dadoo << endl;
 	}
 }
@@ -202,7 +201,7 @@ int main() {
 
 	while (vencedor == 0) {
 		for (int jogadorDaVez = 1; jogadorDaVez < 3; jogadorDaVez++) {
-			valorDado += (rand() % facesDado) + 1;
+			valorDado += (rand() % Dado) + 1;
 
 			cout << "Rodada " << rodadas << endl;
 
