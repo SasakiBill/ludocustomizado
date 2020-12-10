@@ -22,32 +22,50 @@ void introducao() {
 * Função do tipo void recebendo dois vetores por valor e sem retorno (2° requisito do trabalho).
 * Função responsável para verficiar a condição de vitória de um jogador; bem como o encerramento desse software.*/
 void verificaVencedores(int pont[], int pontTot[], int winner = 0) {
-	if (pont[1] == 1) {
+	if (pont[1] == 4) {
 		cout << "We have a winner!\n";
-		cout << "Jogador 1 ganhou com pontuacao: " << pont[1] << " - " << pontTot[1];
+		cout << "Player 1 Foi o vencedor com: " << pont[1] << " - " << pontTot[1];
 		winner = 1;
 		exit(0);
 	}
-	if (pont[2] == 1) {
+	if (pont[2] == 4) {
 		cout << "We have a winner!\n";
-		cout << "Jogador 2 ganhou com pontuacao: " << pont[2] << " - " << pontTot[2];
+		cout << "Player 2 Foi o vencedor com: " << pont[2] << " - " << pontTot[2];
 		winner = 1;
 		exit(0);
 	}
 }
+
+/*@version 1.0.0
+* @author: João Pedro Kelniar
+* Função do tipo string com parâmetros por valor e com retorno (3° requisito do trabalho).
+* Função responsável por determinar um empate, se o número de Pontos for igual ao de Pontos Totais. 
+*/
+string empatez(int pont[], int pontTot[], string tie, int winn = 0) {
+	tie = { "Empate!" };
+	if ((pont[1] && pontTot[1]) == (pont[2] && pontTot[2])) {
+		winn = 1;
+		return tie;
+		exit(0);
+	}
+	else {
+		winn = 0;
+	}
+}
  
+
 /*@version 1.0.0
 * @author: João Pedro Kelniar
 * Função do tipo void recebendo duas strings por referência sem retorno (4° requisito do trabalho).
 * Responsável para determinar o nome dos jogadores.*/
 void nomeJogadores(string* jogador1, string* jogador2) {
-	cout << "Bem vindo Jogador 1! Digite seu nick:\n" << endl;
+	cout << "Bem vindo Player1! Digite seu nick:\n" << endl;
 	cin >> *jogador1;
 	cout << "Seu Nick ficou como\n" << *jogador1;
 	Sleep(2000);
 	system("CLS");
 	Sleep(2000);
-	cout << "Bem vindo Jogador 2! Digite seu nick:\n" << endl;
+	cout << "Bem vindo Player2! Digite seu nick:\n" << endl;
 	cin >> *jogador2;
 	cout << "Seu Nick ficou como\n" << *jogador2;
 	Sleep(2000);
@@ -143,7 +161,7 @@ void verificaPeao(int* player, int*choice, int* tr) {
 /*@version: 1.0.0
 * @author: João Pedro Kelniar
 * Função do tipo void sem retorno, com dois vetores passados por valor, e dois vetores passados por referência.
-* Função responsável por atualizar o placar da partida.
+* Função responsável por atualizar o placar da partida e atualizar quando um peão chegar ao final.
 */
 void placar(int ponTotal[], int pont[], int* tr, int* trClosed) {
 	ponTotal[1] = tr[1] + tr[3] + tr[5] + tr[7];
@@ -169,16 +187,18 @@ void placar(int ponTotal[], int pont[], int* tr, int* trClosed) {
   @author: João Pedro Kelniar
 Função main responsável por operações com números randômicos, prints e demais chamadas de funções para execução do jogo*/
 int main() {
-	int valorDado = 0, escolhaTrilha, rodadas = 1, trilhas[9] = { 0 }, pontuacao[3] = { 0 }, pontuacaoTotal[3] = { 0 }, trilhas_fechadas[9] = { 0 };
+	int valorDado = 0, escolhaTrilha, rodadas = 1, trilhas[9] = { 0 }, pontuacao[3] = { 0 }, pontuacaoTotal[3] = { 0 }, trilhasFechadas[9] = { 0 };
 	int vencedor = 0;
 
-	string pl1, pl2;
+	string pl1, pl2, empates;
 
 	srand(time(NULL));
 
 	introducao();
 
 	nomeJogadores(&pl1, &pl2);
+
+	
 
 	while (vencedor == 0) {
 		for (int jogadorDaVez = 1; jogadorDaVez < 3; jogadorDaVez++) {
@@ -218,9 +238,10 @@ int main() {
 
 			verificaPeao(&jogadorDaVez, &escolhaTrilha, trilhas);
 
-			placar(pontuacaoTotal, pontuacao, trilhas, trilhas_fechadas);
+			placar(pontuacaoTotal, pontuacao, trilhas, trilhasFechadas);
 			
 			verificaVencedores(pontuacao, pontuacaoTotal, vencedor);
+			empatez(pontuacao, pontuacaoTotal, empates, vencedor);
 
 			rodadas++;
 		}
